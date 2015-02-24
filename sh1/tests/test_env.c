@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_tab.c                                     :+:      :+:    :+:   */
+/*   test_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/12 17:04:35 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/12 17:06:10 by rpinet           ###   ########.fr       */
+/*   Created: 2015/02/12 16:42:22 by rpinet            #+#    #+#             */
+/*   Updated: 2015/02/12 16:46:06 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include "../libft/libft.h"
 
-void		ft_print_tab(char **tab)
+typedef struct 
+
+
+int			main(int ac, char **av, char **env)
 {
 	int		i;
 
 	i = 0;
-	while (tab && tab[i] != NULL && tab[i][0] != '\0')
+	while (env[i] != NULL)
 	{
-		ft_putendl(tab[i]);
+		ft_putendl(env[i]);
 		i++;
 	}
+	return (0);
 }

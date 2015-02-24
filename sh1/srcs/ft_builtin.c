@@ -33,7 +33,7 @@ char		*ft_get_env(char **env, char *id)
 {
 	char	*pos;
 
-	while (env && *env)
+	while (env && *env && ft_strcmp(*env, "\0") != 0)
 	{
 		if (!ft_strncmp(*env, id, ft_strlen(id)))
 		{
@@ -68,36 +68,30 @@ char		*ft_clean(char *s)
 	return (str);
 }
 
-char		**ft_builtin(char **env, char **cmd)
+void		ft_builtin(char ***env, char **cmd)
 {
 	if (!ft_strcmp(*cmd, "env"))
-		ft_env(env, cmd);
+		ft_env(*env, cmd);
 	else if (!ft_strcmp(*cmd, "setenv"))
 	{
 		if (*(cmd + 1) && *(cmd + 2))
-			env = ft_setenv(cmd[1], cmd[2], 1, env);
+			ft_setenv(cmd[1], cmd[2], 1, env);
 		else
 			ft_error("[builtin] :", " : setenv bad argument");
 	}
 	else if (!ft_strcmp(*cmd, "unsetenv"))
 	{
 		if (*(cmd + 1))
-		{
-			//		if (ft_unsetenv(cmd[1], env) == -1);
-			//			ft_error("[builtin] :", " : setenv echec")
-			//		else
-			env = ft_unsetenv(cmd[1], env);
-		}
+			ft_unsetenv(cmd[1], env);
 		else
 			ft_error("[builtin] :", " : unsetenv bad argument");
 	}
 	else if (!ft_strcmp(*cmd, "cd"))
-		ft_exec_cd(env, cmd);
+		ft_exec_cd(*env, cmd);
 	else if (!ft_strncmp(*cmd, "/", 1) || !ft_strncmp(*cmd, "./", 2))
-		ft_exec(env, cmd);
+		ft_exec(*env, cmd);
 	else if (!ft_strcmp(*cmd, "exit"))
 		exit(0);
 	else
-		ft_exec_cmd(env, cmd);
-	return(env);
+		ft_exec_cmd(*env, cmd);
 }

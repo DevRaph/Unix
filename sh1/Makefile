@@ -14,7 +14,7 @@ NAME = ft_minishell1
 
 SRC = main_sh1.c
 
-FLAG = -Wall -Werror -Wextra
+FLAG = -g -Wall -Werror -Wextra
 
 OBJ = $(SRC:.c=.o)
 

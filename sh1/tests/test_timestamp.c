@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_tab.c                                     :+:      :+:    :+:   */
+/*   test_timestamp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/12 17:04:35 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/12 17:06:10 by rpinet           ###   ########.fr       */
+/*   Created: 2014/11/25 16:55:34 by rpinet            #+#    #+#             */
+/*   Updated: 2014/11/25 16:56:19 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include <time.h>
 
-void		ft_print_tab(char **tab)
+int		main(void)
 {
-	int		i;
-
-	i = 0;
-	while (tab && tab[i] != NULL && tab[i][0] != '\0')
-	{
-		ft_putendl(tab[i]);
-		i++;
-	}
+	time_t t;
+	time(&t);
+	printf ("Nombre de seconde écoulée depuis l'Epoch : %d\n", t);
+	return (0);
 }

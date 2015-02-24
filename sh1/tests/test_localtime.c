@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_tab.c                                     :+:      :+:    :+:   */
+/*   test_localtime.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/12 17:04:35 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/12 17:06:10 by rpinet           ###   ########.fr       */
+/*   Created: 2014/11/25 17:00:07 by rpinet            #+#    #+#             */
+/*   Updated: 2014/11/25 17:01:40 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include <time.h>
 
-void		ft_print_tab(char **tab)
+int		main(void)
 {
-	int		i;
+	time_t t;
+	struct tm *heure;
 
-	i = 0;
-	while (tab && tab[i] != NULL && tab[i][0] != '\0')
-	{
-		ft_putendl(tab[i]);
-		i++;
-	}
+	time(&t);
+	heure = localtime(&t);
+	printf ("Nombre de seconde écoulée depuis l'Epoch : %d\n", t);
+	printf ("L'heure est donc : %dh%d:%d\n", heure->tm_hour, heure->tm_min, heure->tm_sec);
+	printf ("La date est donc : %d/%d/%d\n", heure->tm_mday, heure->tm_mon, heure->tm_year);
+	return (0);
 }
+

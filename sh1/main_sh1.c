@@ -18,11 +18,20 @@ int		main(int ac, char **av)
 {
 	extern char		**environ;
 
+	if (signal(SIGINT, ft_recup_signal) == SIG_ERR)
+		ft_error("[Main] :", " : signal error");
+	if (signal(SIGTSTP, SIG_IGN) == SIG_ERR)
+		ft_error("[Main] :", " : signal error");
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		ft_error("[Main] :", " : signal error");
+	if (signal(SIGSEGV, ft_recup_signal) == SIG_ERR)
+		ft_error("[Main] :", " : signal error");
 	if (ac > 1)
 		return (ft_error("[Main] :", " : no argument in ft_minishell1"));
-	if (!ft_minishell1(av, environ) && ac)
-		ft_putendl("*******launch OK\n");
+	if (!ft_minishell1(environ))
+		ft_putendl("\nQUIT\n");
 	else
-		exit (ft_error("[Main] : ", ": error launch shell\n"));
+		return (ft_error("[Main] : ", ": error launch shell\n"));
+	(void)av;
 	return (0);
 }

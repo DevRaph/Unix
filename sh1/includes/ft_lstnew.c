@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_tab.c                                     :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/12 17:04:35 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/12 17:06:10 by rpinet           ###   ########.fr       */
+/*   Created: 2015/02/12 18:51:49 by rpinet            #+#    #+#             */
+/*   Updated: 2015/02/12 22:50:43 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void		ft_print_tab(char **tab)
+t_env			*ft_lstnew(t_env **env, char *str)
 {
-	int		i;
+	t_env		*elem;
+	char		*name;
+	char		*path;
+	char		**tab;
 
-	i = 0;
-	while (tab && tab[i] != NULL && tab[i][0] != '\0')
+	if (!(elem = (t_env *)malloc(sizeof(t_env))))
+		exit(ft_error("[lstnew] : ", ": malloc error"));
+	if (env && *env)
 	{
-		ft_putendl(tab[i]);
-		i++;
+		tab = ft_strsplit(str, '=');
 	}
+	return (elem);
 }

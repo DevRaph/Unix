@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_tab.c                                     :+:      :+:    :+:   */
+/*   testprerror.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/12 17:04:35 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/12 17:06:10 by rpinet           ###   ########.fr       */
+/*   Created: 2014/11/25 16:49:09 by rpinet            #+#    #+#             */
+/*   Updated: 2014/11/25 16:49:59 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include <errno.h>
 
-void		ft_print_tab(char **tab)
+int		main(void)
 {
-	int		i;
+	FILE *fichier = NULL;
 
-	i = 0;
-	while (tab && tab[i] != NULL && tab[i][0] != '\0')
+	fichier = fopen ("fichier.txt", "r");
+	if (fichier == NULL)
 	{
-		ft_putendl(tab[i]);
-		i++;
+		printf ("Code de l'erreur : %d\n", errno);
+		perror("Erreur");
 	}
+	else
+		fclose(fichier);
+	return (0);
 }
+

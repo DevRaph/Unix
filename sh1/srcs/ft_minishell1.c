@@ -19,92 +19,114 @@
    malloc a taille + 1
    transfert
    suppression (strclr + free du env)
-   retour tab
-   ... bonus ...
-   "cd " !!! home attention si pas de home (gestion)
-   si env -i creer un env
-   > PATH=/bin:/opt/X11
-   > HOME= (getcwd)
-   > PWD= (getcwd)
-   > OLD= (getcwd)-1*/
+   retour tab*/
+
+
 
 void		ft_prompt(char **env, char *str)
 {
 	char	*pos;
 
-	//pos = ft_get_env(env, "PWD");
-	(void)env;
+	ft_setfgcolor(33);
+	write (1, "    [", 5);
+	ft_resetcolor();
+	if (env && ft_get_env(env, "USER") != NULL)
+		ft_putstr(ft_strjoin(ft_get_env(env, "USER") + 5, " --> "));
 	pos = getcwd(NULL, 1024);
 	pos = pos + ft_strlen(pos);
 	while (pos && (*(pos - 1) != '/'))
 		pos--;
-	write (1, "    [", 5);
 	if (pos)
 		write (1, pos, ft_strlen(pos));
+	ft_setfgcolor(33);
 	write (1, "] $> ", 5);
+	ft_resetcolor();
 	if (str)
 		write(1, str, ft_strlen(str));
 }
 
 void		ft_recup_signal(int signal)
 {
-	extern char		**environ;  // controle c plus pris en compte ???
+	extern char		**environ;
 
-	write(1, "\n", 1);
-	ft_prompt(environ, "");
-	(void)signal;
+	if (signal == SIGINT)
+	{
+		write(1, "\n", 1);
+		ft_prompt(environ, "");
+	}
+	else if (signal == SIGSEGV)
+	{
+		ft_error("[recup_signal] :", " : segfault");
+		ft_prompt(environ, "");
+		ft_print_tab(environ);
+		exit (0);
+	}//ft_putendl(ft_itoa(signal));
 }
 
-int			ft_launch_shell(char **env)
+void			ft_launch_shell(char ***env)
 {
 	char	*line;
 	char	**cmd;
-	int		ret; // a virer pour surveiller les retour de fork
+	char	**sep;
 
-	ret = 1234;
-	write (1, "*Father\n", 8);
-	ft_prompt(env, "");
+	ft_prompt(*env, "");
 	while (get_next_line(0, &line) > 0)
 	{
-		line = ft_clean(line);
 		if (line[0])
+			sep = ft_strsplit(line, ';');
+		while (sep && *sep++)
 		{
-			cmd = ft_strsplit(line, ' ');
-			env = ft_builtin(env, cmd);
+			line = ft_clean(*(sep - 1));
+			if (line && *line)
+			{
+				cmd = ft_strsplit(line, ' ');
+				ft_setfgcolor(2);
+				ft_builtin(env, cmd);
+				ft_resetcolor();
+			}
 		}
-		if (signal(SIGINT, ft_recup_signal) == SIG_ERR)
-			ft_error("[ft_launch_shell] :", " : signal error");
-		else
-			ft_prompt(env, "");
+		ft_prompt(*env, "");
 	}
-	return (ret);
 }
 
 char		**ft_init_env(void)
 {
 	char	**env;
 
-	if (!(env = (char **)malloc(sizeof(char *) * 3)))
+	if (!(env = (char **)malloc(sizeof(char *) * 5)))
 		return (NULL);
-	env[0] = ft_strjoin("HOME=", getcwd(NULL, 1024));
-	env[1] = ft_strjoin("PWD=", getcwd(NULL, 1024));
-	env[2] = ft_strjoin("OLDPWD=", getcwd(NULL, 1024));
-	//ft_print_tab(env); //mauvaise initialisation
-	ft_launch_shell(env);
+	*env = ft_strjoin("HOME=", getcwd(NULL, 1024));
+	*(env + 1) = ft_strjoin("PWD=", getcwd(NULL, 1024));
+	*(env + 2) = ft_strjoin("OLDPWD=", getcwd(NULL, 1024));
+	*(env + 3) = ft_strjoin("USER=", " -mode debug- ");
+	*(env + 4) = ft_strdup("\0");
 	return (env);
 }
 
-int			ft_minishell1(char **av, char **env)
+int			ft_minishell1(char **environ)
 {
-	if (env == NULL || *env == NULL)
+	int		size;
+	char	**env;
+	int		i;
+
+	if (environ == NULL || *environ == NULL)
 	{
-		write(1, "coucou\n", 7);
 		env = ft_init_env();
 		if (env == NULL)
 			return (1);
+		else
+		ft_launch_shell(&env);
 	}
 	else
-		ft_launch_shell(env);
-	(void)av;
+	{
+		size = ft_size_tab(environ);
+		if (!(env = (char **)malloc(sizeof(char *) * size + 1)))
+			return (1);
+		i = 0;
+		while (environ && *environ++)
+			env[i++] = ft_strdup(*(environ - 1));
+		env[i] = ft_strdup("\0");
+		ft_launch_shell(&env);
+	}
 	return (0);
 }
