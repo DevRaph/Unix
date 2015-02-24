@@ -42,7 +42,7 @@ void			ft_print_env(char **env, char ***cmd)
 		ok = 0;
 		while (--j > 0)
 		{
-			if (!ft_strncmp(env[i], cmd[0][j], ft_size_id(cmd[0][j], "=")))
+			if (!ft_strncmp(env[i], cmd[0][j], ft_size_id(cmd[0][j], "=") + 1))
 			{
 				if (!ok)
 					ft_putendl(cmd[0][j]);
@@ -54,7 +54,7 @@ void			ft_print_env(char **env, char ***cmd)
 			ft_putendl(env[i]);
 	}
 }
-
+// env c=t LESS=Bonjour less=bonjour LES=bonjour LESS=coucou c=coucou  !!! OK
 void			ft_print_check(char **cmd)
 {
 	int			i;
@@ -78,11 +78,32 @@ void			ft_print_check(char **cmd)
 			ft_putendl(cmd[size]);
 	}
 }
-
+// amelioration : env PATH=coucou ls || env -i ls
 void			ft_env(char **env, char **cmd)
 {
 	int			size;
 	int			nb;
+
+/* 
+	char **e = NULL;
+	if (*cmd && !*(cmd + 1))
+		ft_print_tab(env);
+	else if (*cmd && !ft_strcmp(*(cmd + 1), "-i"))
+		if (*(cmd + 2))
+			ft_builtin(&e, cmd + 2);// retirer env et -i
+	else if (*cmd && !ft_strcmp(*(cmd + 1), "-i"))
+	{
+		//check path=coucou ... jusque commande
+		int i = 1;
+		while (cmd[i] && !ft_strchr(cmd[i], '='))
+			i++;
+		if (cmd[i + 1])
+			ft_builtin(&e, cmd + i);// retirer env et tout les ...=...
+		//else
+			//voir dessous
+
+	}
+*/
 
 	if (*cmd && !*(cmd + 1))
 		ft_print_tab(env);

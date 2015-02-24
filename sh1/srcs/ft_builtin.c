@@ -13,9 +13,9 @@
 #include "../includes/ft_minishell1.h"
 #include "../libft/libft.h"
 
-char			*ft_join(char *path, char *cmd)
+char		*ft_join(char *path, char *cmd)
 {
-	char		*ret;
+	char	*ret;
 
 	if (!path)
 		return (".");

@@ -13,36 +13,42 @@
 #include "../libft/libft.h"
 #include "../includes/ft_minishell1.h"
 
+static void		ft_fork_cmd(char **path, char **cmd)
+{
+	int			ok;
+	extern char	**environ;
+
+	if (cmd == NULL || cmd[0] == NULL || !ft_strcmp(cmd[0], ""))
+		exit (0);
+	ok = 1;
+	while (path && *path)
+		if (execve (ft_join(*path++, cmd[0]), cmd, environ) != -1)
+			ok = 0;
+	if (ok == 1)
+		ft_error("[exec_cmd]", ft_strjoin("command not found: ", cmd[0]));
+	exit(0);
+}
+
 int				ft_exec_cmd(char **env, char **cmd)
 {
 	int			status;
 	pid_t		pid;
 	char		**path;
 	int			ok;
-	extern char	**environ;
 
 	path = NULL;
 	ok = -1;
-	while (cmd[0] && env && *env && ft_strcmp(env[++ok], "\0"))// test -cmd[0]
+	while (env && *env && ft_strcmp(env[++ok], "\0"))
 		if (!ft_strncmp(env[ok], "PATH", 4))
 			path = ft_strsplit(env[ok] + 5, ':');
 	pid = fork();
 	if (pid == 0)
 	{
-		if (cmd == NULL || cmd[0] == NULL || !ft_strcmp(cmd[0], ""))
-			exit (0);
-		ok = 1;
-		while (path && *path)
-			if (execve (ft_join(*path++, cmd[0]), cmd, environ) != -1)
-				ok = 0;
-		if (ok == 1)
-			ft_error("[exec_cmd]", ft_strjoin("command not found: ", cmd[0]));
-		exit(0);
+		ft_fork_cmd(path, cmd);
 	}
 	else if (pid < 0)
 		ft_error("\n[exec_cmd] :", " : fork failed\n");
 	waitpid(pid, &status, 0);
-	//ft_memdel((void **)path);
 	return (status);
 }
 
@@ -73,7 +79,7 @@ int				ft_exec(char **env, char **cmd)
 	(void)env;
 	return (status);
 }
-//amelioration avec clean path
+
 static char		*ft_contruct_path(char **env, char **cmd)
 {
 	char		*path;
@@ -92,10 +98,6 @@ static char		*ft_contruct_path(char **env, char **cmd)
 	}
 	else if (!ft_strncmp(*(cmd + 1), "/", 1))
 		path = ft_strdup(*(cmd + 1));
-	//else if (!ft_strncmp(*(cmd + 1), "./.", 3))
-	//	path = ft_strdup(str);
-	//else if (!ft_strncmp(*(cmd + 1), "./", 2))
-	//	path = ft_join(str, *(cmd + 1) + 2);
 	else
 		path = ft_join(str, *(cmd + 1));
 	return (path);
@@ -120,8 +122,6 @@ int				ft_exec_cd(char **env, char **cmd)
 		while (env && *p && ft_strcmp(env[++i], "\0"))
 			if (!ft_strncmp(env[i], "PWD", 3))
 				env[i] = ft_strjoin("PWD=", getcwd(NULL, 1024));
-		//if (p && *p)
-		//	ft_strdel(&p);
 	}
 	else
 		return (ft_error("[exec_cmd] :", " no directory or authorization"));
