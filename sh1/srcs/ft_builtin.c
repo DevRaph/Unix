@@ -6,27 +6,23 @@
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/17 22:13:24 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/19 21:36:18 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/02/24 22:09:53 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell1.h"
 #include "../libft/libft.h"
-#include "../includes/ft_minishell1.h"
-#include "../libft/libft.h"
 
-//debug
-void		ft_print_cmd(char **cmd)
+char			*ft_join(char *path, char *cmd)
 {
-	write (1, "cmd=", 4);
-	write (1, *cmd, ft_strlen(*cmd));
-	write (1, " opt=", 5);
-	while (cmd && *cmd++)
-	{
-		write (1, *cmd, ft_strlen(*cmd));
-		write (1, " ", 1);
-	}
-	write (1, "\n", 1);
+	char		*ret;
+
+	if (!path)
+		return (".");
+	ret = ft_strjoin(path, "/");
+	ret = ft_strjoin(ret, cmd);
+	free (path);
+	return (ret);
 }
 
 char		*ft_get_env(char **env, char *id)
@@ -74,7 +70,7 @@ void		ft_builtin(char ***env, char **cmd)
 		ft_env(*env, cmd);
 	else if (!ft_strcmp(*cmd, "setenv"))
 	{
-		if (*(cmd + 1) && *(cmd + 2))
+		if (*(cmd + 1) && *(cmd + 2) && !*(cmd + 3))
 			ft_setenv(cmd[1], cmd[2], 1, env);
 		else
 			ft_error("[builtin] :", " : setenv bad argument");

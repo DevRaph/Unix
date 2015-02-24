@@ -18,6 +18,8 @@ SRC = 	ft_minishell1.c \
 		ft_builtin.c \
 		ft_exec.c \
 		ft_env.c \
+		ft_setenv.c \
+		ft_unsetenv.c
 
 OBJ = $(SRC:.c=.o)
 
