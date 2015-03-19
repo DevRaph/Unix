@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/17 22:13:24 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/24 22:09:53 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/19 15:50:22 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell1.h"
 #include "../libft/libft.h"
+
+size_t		ft_size_id(char const *s, char *c)
+{
+	int		size;
+
+	if (!s || !*s || !c)
+		return (0);
+	size = 0;
+	while (ft_strncmp(s, c, (size_t)ft_strlen(c)) != 0 && *s != '\0')
+	{
+		s++;
+		size++;
+	}
+	return (size);
+}
 
 char		*ft_join(char *path, char *cmd)
 {
@@ -31,11 +46,13 @@ char		*ft_get_env(char **env, char *id)
 
 	while (env && *env && ft_strcmp(*env, "\0") != 0)
 	{
-		if (!ft_strncmp(*env, id, ft_strlen(id)))
+		pos = ft_strjoin(id, "=");
+		if (!ft_strncmp(*env, pos, ft_strlen(id) + 1))
 		{
 			pos = ft_strdup(*env);
-			return (pos);
+			return (*env);
 		}
+		//ft_strdel(&pos);
 		env++;
 	}
 	return (NULL);
@@ -83,7 +100,7 @@ void		ft_builtin(char ***env, char **cmd)
 			ft_error("[builtin] :", " : unsetenv bad argument");
 	}
 	else if (!ft_strcmp(*cmd, "cd"))
-		ft_exec_cd(*env, cmd);
+		ft_exec_cd(env, cmd);
 	else if (!ft_strncmp(*cmd, "/", 1) || !ft_strncmp(*cmd, "./", 2))
 		ft_exec(*env, cmd);
 	else if (!ft_strcmp(*cmd, "exit"))

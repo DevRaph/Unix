@@ -28,6 +28,5 @@ void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 		copy++;
 		ptr++;
 	}
-	//free(copy);
 	return (NULL);
 }

@@ -26,6 +26,5 @@ char		*ft_strsub(char const *s, unsigned int start, size_t len)
 	s += start;
 	while (len--)
 		*str++ = *s++;
-	//free(ptr); //enleve pour test
 	return (ptr);
 }

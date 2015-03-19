@@ -22,6 +22,5 @@ char	*ft_strtrim_left(char const *s, size_t n)
 	if (n > ft_strlen(s))
 		return ("");
 	str = ft_strdup(s + n);
-	//free(str);
 	return (str);
 }

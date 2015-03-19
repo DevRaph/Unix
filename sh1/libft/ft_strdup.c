@@ -12,33 +12,7 @@
 
 #include <stdlib.h>
 #include "libft.h"
-/*
-void	ft_bcopy(char *src, char *dst, unsigned int len)
-{
-	if (src < dst)
-	{
-		src += len;
-		dst += len;
-		while (len--)
-			*--dst = *--src;
-	}
-	else if (src != dst)
-		while (len--)
-			*dst++ = *src++;
-}
 
-char	*ft_strdup(const char *s)
-{
-	size_t	len;
-	char	*copy;
-
-	len = ft_strlen(s) + 1;
-	if (!(copy = (char *)ft_memalloc((unsigned int)len)))
-		return (NULL);
-	ft_bcopy((char *)s, copy, len);
-	return (copy);
-}
-*/
 char		*ft_strdup(const char *s)
 {
 	char	*copy;
@@ -54,7 +28,5 @@ char		*ft_strdup(const char *s)
 		size++;
 	}
 	copy[size] = '\0';
-	//free(copy);
 	return (copy);
 }
-

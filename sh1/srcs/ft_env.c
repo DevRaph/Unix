@@ -3,31 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/19 20:37:41 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/24 22:11:28 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/19 20:53:21 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../includes/ft_minishell1.h"
-
-// corriger ft_size_word dans libft et ft_strsplit
-size_t			ft_size_id(char const *s, char *c)
-{
-	int			size;
-
-	if (!s || !*s || !c)
-		return (0);
-	size = 0;
-	while (ft_strncmp(s, c, (size_t)ft_strlen(c)) != 0 && *s != '\0')
-	{
-		s++;
-		size++;
-	}
-	return (size);
-}
 
 void			ft_print_env(char **env, char ***cmd)
 {
@@ -54,7 +38,7 @@ void			ft_print_env(char **env, char ***cmd)
 			ft_putendl(env[i]);
 	}
 }
-// env c=t LESS=Bonjour less=bonjour LES=bonjour LESS=coucou c=coucou  !!! OK
+
 void			ft_print_check(char **cmd)
 {
 	int			i;
@@ -78,51 +62,70 @@ void			ft_print_check(char **cmd)
 			ft_putendl(cmd[size]);
 	}
 }
-// amelioration : env PATH=coucou ls || env -i ls
-void			ft_env(char **env, char **cmd)
+
+void			ft_env_builtin1(char **env, char **cmd)
 {
 	int			size;
 	int			nb;
 
-/* 
-	char **e = NULL;
-	if (*cmd && !*(cmd + 1))
-		ft_print_tab(env);
-	else if (*cmd && !ft_strcmp(*(cmd + 1), "-i"))
-		if (*(cmd + 2))
-			ft_builtin(&e, cmd + 2);// retirer env et -i
-	else if (*cmd && !ft_strcmp(*(cmd + 1), "-i"))
+	nb = 0;
+	size = 0;
+	while (cmd && cmd[size] && ft_strcmp(cmd[size++], "\0"))
+		if (ft_strchr(cmd[size], '='))
+			nb++;
+	if (nb == (ft_size_tab(cmd) - 1))
 	{
-		//check path=coucou ... jusque commande
-		int i = 1;
-		while (cmd[i] && !ft_strchr(cmd[i], '='))
-			i++;
-		if (cmd[i + 1])
-			ft_builtin(&e, cmd + i);// retirer env et tout les ...=...
-		//else
-			//voir dessous
-
+		ft_print_env(env, &cmd);
+		ft_print_check(cmd);
 	}
-*/
-
-	if (*cmd && !*(cmd + 1))
-		ft_print_tab(env);
 	else
 	{
-		nb = 0;
-		size = 0;
-		while (cmd && cmd[size++] != NULL)
-			if (ft_strchr(cmd[size], '='))
-				nb++;
-		if ((nb + 1) == ft_size_tab(cmd))
-		{
-			ft_print_env(env, &cmd);
-			ft_print_check(cmd);
-		}
+		if (!ft_strncmp(*(cmd + nb + 1), "/", 1) ||
+			!ft_strncmp(*(cmd + nb + 1), "./", 2))
+			ft_exec(env, cmd + nb + 1);
+		else if (!ft_strncmp(*(cmd + nb + 1), "cd", 1))
+			ft_exec_cd(&env, cmd + nb + 1);
 		else
-		{
-			*cmd = ft_strdup(*(cmd + 1));
-			ft_exec_cmd(env, cmd + 1);
-		}
+			ft_exec_cmd(env, cmd + nb + 1);
 	}
+	(void)env;
+}
+
+void			ft_env_builtin2(char **env, char **cmd)
+{
+	int			size;
+	int			nb;
+
+	nb = 0;
+	size = 0;
+	while (cmd && cmd[size] && ft_strcmp(cmd[size++], "\0"))
+		if (ft_strchr(cmd[size], '='))
+			nb++;
+	if (nb == (ft_size_tab(cmd) - 2))
+	{
+		ft_print_env(NULL, &cmd);
+		ft_print_check(cmd + 1);
+	}
+	else
+	{
+		if (!ft_strncmp(*(cmd + nb + 2), "/", 1) ||
+			!ft_strncmp(*(cmd + nb + 2), "./", 2))
+			ft_exec(NULL, cmd + nb + 2);
+		else if (ft_strncmp(*(cmd + nb + 2), "cd", 1))
+			ft_exec_cmd(NULL, cmd + nb + 2);
+	}
+	(void)env;
+}
+
+void			ft_env(char **env, char **cmd)
+{
+	if (*cmd && !*(cmd + 1))
+		ft_print_tab(env);
+	else if (*cmd && !ft_strcmp(*(cmd + 1), "-i"))
+	{
+		if (*(cmd + 2))
+			ft_env_builtin2(env, cmd);
+	}
+	else
+		ft_env_builtin1(env, cmd);
 }

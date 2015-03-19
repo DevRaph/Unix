@@ -13,8 +13,8 @@
 #include "../libft/libft.h"
 #include "../includes/ft_minishell1.h"
 
-# define FG_COLOR_TYPE "38;5"
-# define BG_COLOR_TYPE "48;5"
+#define FG_COLOR_TYPE "38;5"
+#define BG_COLOR_TYPE "48;5"
 
 static void	setcolor(t_uchar color, const char *type)
 {
@@ -26,7 +26,6 @@ static void	setcolor(t_uchar color, const char *type)
 	ft_putchar(';');
 	ft_putstr(color_str);
 	ft_putchar('m');
-	//free(color_str);
 }
 
 void		ft_setfgcolor(t_uchar color)
@@ -43,4 +42,3 @@ void		ft_resetcolor(void)
 {
 	ft_putstr("\033[0m");
 }
-

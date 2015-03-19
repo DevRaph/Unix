@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/12 17:11:14 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/12 17:13:33 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/09 17:59:11 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
-#include <stdio.h>
+#include <stdlib.h>
 
 int			ft_error(char *s, char *s2)
 {

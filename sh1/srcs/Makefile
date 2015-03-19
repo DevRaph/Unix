@@ -38,6 +38,7 @@ clean:
 fclean: clean
 	@echo "\033[35;1m• \033[0mRemoving $(NAME) ...\033[55G\c"
 	@rm -rf $(NAME)
+	@rm -rf ft_minishell1
 	@echo "\033[37;1m[\033[32mOK !\033[37m]\033[0m"
 
 re: fclean all

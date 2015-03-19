@@ -12,20 +12,6 @@
 
 #include "libft.h"
 #include <stdlib.h>
-/*
-char	*ft_strndup(const char *s, size_t n)
-{
-	char	*str;
-
-	str = ft_memalloc(n + 1);
-	if (str)
-	{
-		ft_memcpy(str, s, n);
-		*(str + n) = 0;
-	}
-	free(str);
-	return (str);
-}*/
 
 char		*ft_strndup(char const *s, size_t n)
 {
@@ -44,7 +30,5 @@ char		*ft_strndup(char const *s, size_t n)
 		size++;
 	}
 	copy[size] = '\0';
-	//free(ptr);
 	return (copy);
 }
-

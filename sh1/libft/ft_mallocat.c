@@ -36,7 +36,6 @@ char					*ft_mallocat(char *s1, char *s2)
 	while (*s2)
 		*tmp++ = *s2++;
 	*tmp = '\0';
-	//free(s1 - len1);
 	free(tmp - len1 - len2);
 	return (tmp - len1 - len2);
 }

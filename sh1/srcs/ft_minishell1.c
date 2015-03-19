@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/10 16:05:43 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/24 22:11:55 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/19 13:34:00 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+// prompt en return 
 void		ft_prompt(char **env, char *str)
 {
 	char	*pos;
@@ -36,7 +37,7 @@ void		ft_prompt(char **env, char *str)
 	if (str)
 		write(1, str, ft_strlen(str));
 }
-
+// launch cm pour clean et prompt a del
 void		ft_launch_shell(char ***env)
 {
 	char	*line;
@@ -59,8 +60,11 @@ void		ft_launch_shell(char ***env)
 					ft_setfgcolor(2);
 					ft_builtin(env, cmd);
 					ft_resetcolor();
+					ft_strdel(cmd);
 				}
+				//free(line); // fait rien
 			}
+			//ft_strdel(sep);
 		}
 		ft_prompt(*env, "");
 	}
@@ -79,7 +83,7 @@ char		**ft_init_env(void)
 	*(env + 2) = ft_strjoin("OLDPWD=", str);
 	*(env + 3) = ft_strjoin("USER=", " -mode debug- ");
 	*(env + 4) = ft_strdup("\0");
-	free(str);
+	//free(str);
 	return (env);
 }
 

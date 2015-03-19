@@ -12,27 +12,6 @@
 
 #include "libft.h"
 #include <stdlib.h>
-/*
-char	*ft_itoa(int n)
-{
-	char *p;
-
-	p = ft_strnew((int)ft_nbrlen(10)) + (int)ft_nbrlen(10);
-	if (n >= 0 && p)
-	{
-		*--p = '0' + (n % 10);
-		while ((n /= 10) != 0)
-			*--p = '0' + (n % 10);
-	}
-	else if (p)
-	{
-		*--p = '0' - (n % 10);
-		while ((n /= 10) != 0)
-			*--p = '0' - (n % 10);
-		*--p = '-';
-	}
-	return (p);
-}*/
 
 char	*ft_itoa(int n)
 {

@@ -6,17 +6,17 @@
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/10 19:23:52 by rpinet            #+#    #+#             */
-/*   Updated: 2014/12/29 21:04:27 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/18 10:48:55 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-int		ft_count_word(char const *s, char c)
+int				ft_count_word(char const *s, char c)
 {
-	int		count;
-	int		valid;
+	int			count;
+	int			valid;
 
 	valid = 0;
 	count = 0;
@@ -34,9 +34,9 @@ int		ft_count_word(char const *s, char c)
 	return (count);
 }
 
-size_t	ft_size_word(char const *s, char c)
+static size_t	ft_size_wo(char const *s, char c)
 {
-	int		size;
+	int			size;
 
 	size = 0;
 	while (*s != c && *s != '\0')
@@ -47,10 +47,10 @@ size_t	ft_size_word(char const *s, char c)
 	return (size);
 }
 
-char	**ft_strsplit(char const *s, char c)
+char			**ft_strsplit(char const *s, char c)
 {
-	char	**tab;
-	int		i;
+	char		**tab;
+	int			i;
 
 	if (!s)
 		return (NULL);
@@ -61,14 +61,13 @@ char	**ft_strsplit(char const *s, char c)
 	{
 		if (*s != c)
 		{
-			tab[i] = ft_strndup(s, ft_size_word(s, c));
-			s += ft_size_word(s, c);
+			tab[i] = ft_strndup(s, ft_size_wo(s, c));
+			s += ft_size_wo(s, c);
 			i++;
 		}
 		else
 			s++;
 	}
-	tab[i] = '\0';
-	//free(tab);
+	tab[i] = 0;
 	return (tab);
 }

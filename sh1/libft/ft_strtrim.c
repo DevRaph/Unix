@@ -28,6 +28,5 @@ char	*ft_strtrim(char const *s)
 	while (*ptr == ' ' || *ptr == '\t' || *ptr == '\n')
 		ptr--;
 	*++ptr = '\0';
-	//free(str);
 	return (str);
 }

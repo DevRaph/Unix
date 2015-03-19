@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_setenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 22:03:41 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/24 22:12:44 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/19 13:36:54 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,30 @@ static char		**ft_add_line(char **env, char *name, char *value)
 	char		**ptr;
 	int			i;
 
+	ptr = NULL;
 	if (env && *env && name && value)
 	{
 		size = ft_size_tab(env);
-		if ((save = (char **)malloc(sizeof(char *) * size + 1)))
+		if ((save = (char **)malloc(sizeof(char *) * size + 2)))
 		{
 			ptr = env;
 			i = -1;
-			while (ft_strcmp(ptr[++i], "\0"))// <= size ?
+			while (env && *env && ft_strcmp(ptr[++i], "\0"))
 				save[i] = ft_strdup(ptr[i]);
 			save[i++] = ft_strjoin(ft_strjoin(name, "="), value);
 			save[i] = ft_strdup("\0");
 		}
-		ft_strdel(ptr);
+		//ft_strdel(ptr);
 		return (save);
 	}
 	else
 		return (env);
 }
-// gerer taille max de l'env 1024 + 1 ou 0 pour overite
+
 void			ft_setenv(char *name, char *value, int o, char ***env)
 {
 	char		**ptr;
+	char		*str;
 
 	if (env && *env && name && value)
 	{
@@ -54,10 +56,13 @@ void			ft_setenv(char *name, char *value, int o, char ***env)
 			if (ft_get_env(*env, name) != NULL && o != 0)
 			{
 				ptr = *env;
-				while (*ptr && ft_strncmp(*ptr, name, ft_strlen(name)) != 0)
+				str = ft_strjoin(name, "=");
+				while (*ptr && ft_strncmp(*ptr, str, ft_strlen(name) + 1) != 0)
 					ptr++;
 				*ptr = ft_strjoin(ft_strjoin(name, "="), value);
 			}
 		}
 	}
+	else if (env && *env && !ft_strcmp(**env, "\0") && name && value)
+		*env[0] = ft_strjoin(ft_strjoin(name, "="), value);
 }
