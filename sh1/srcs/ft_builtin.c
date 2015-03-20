@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/17 22:13:24 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/19 15:50:22 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/20 17:13:33 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char		*ft_get_env(char **env, char *id)
 			pos = ft_strdup(*env);
 			return (*env);
 		}
-		//ft_strdel(&pos);
+		ft_strdel(&pos);
 		env++;
 	}
 	return (NULL);
@@ -90,21 +90,21 @@ void		ft_builtin(char ***env, char **cmd)
 		if (*(cmd + 1) && *(cmd + 2) && !*(cmd + 3))
 			ft_setenv(cmd[1], cmd[2], 1, env);
 		else
-			ft_error("[builtin] :", " : setenv bad argument");
+			ft_error("builtin", (*(cmd + 1)) ? "to fiew argument" : "too many arguments");
 	}
 	else if (!ft_strcmp(*cmd, "unsetenv"))
 	{
 		if (*(cmd + 1))
 			ft_unsetenv(cmd[1], env);
 		else
-			ft_error("[builtin] :", " : unsetenv bad argument");
+			ft_error("builtin", "unsetenv bad argument");
 	}
 	else if (!ft_strcmp(*cmd, "cd"))
-		ft_exec_cd(env, cmd);
+		ft_exec_cd(*env, cmd);
 	else if (!ft_strncmp(*cmd, "/", 1) || !ft_strncmp(*cmd, "./", 2))
 		ft_exec(*env, cmd);
 	else if (!ft_strcmp(*cmd, "exit"))
-		exit(0);
+		ft_exit(cmd);
 	else
 		ft_exec_cmd(*env, cmd);
 }

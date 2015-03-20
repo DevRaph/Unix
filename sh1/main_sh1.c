@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/10 16:16:12 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/19 15:50:08 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/20 17:53:15 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void				ft_recup_signal(int signal)
 	else if (signal == SIGSEGV)
 	{
 		write(1, "\n", 1);
-		ft_error("[recup_signal] :", " : segfault");
+		ft_error("recup_signal", "segfault");
 		exit (-1);
 	}
 }
@@ -36,15 +36,17 @@ int					main(int ac, char **av)
 	extern char		**environ;
 
 	if (signal(SIGINT, ft_recup_signal) == SIG_ERR)
-		ft_error("[Main] :", " : signal error");
+		ft_error("Main", "signal error");
 	if (signal(SIGSEGV, ft_recup_signal) == SIG_ERR)
-		ft_error("[Main] :", " : signal error");
+		ft_error("Main", "signal error");
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		ft_error("Main", "signal error");
 	if (ac > 1)
-		return (ft_error("[Main] :", " : no argument in ft_minishell1"));
+		return (ft_error("Main", "no argument in ft_minishell1"));
 	if (!ft_minishell1(environ))
 		ft_putendl("\nQUIT\n");
 	else
-		return (ft_error("[Main] : ", ": error launch shell\n"));
+		return (ft_error("Main", "error launch shell\n"));
 	(void)av;
 	(void)ac;
 	return (0);

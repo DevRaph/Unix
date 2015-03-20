@@ -6,7 +6,7 @@
 #    By: rpinet <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/19 20:16:12 by rpinet            #+#    #+#              #
-#    Updated: 2015/02/19 20:16:16 by rpinet           ###   ########.fr        #
+#    Updated: 2015/03/20 15:05:16 by rpinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRC = 	ft_minishell1.c \
 		ft_exec.c \
 		ft_env.c \
 		ft_setenv.c \
-		ft_unsetenv.c
+		ft_unsetenv.c \
+		ft_exit.c
 
 OBJ = $(SRC:.c=.o)
 

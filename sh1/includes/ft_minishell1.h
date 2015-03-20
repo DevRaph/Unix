@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell1.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/10 16:20:19 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/10 16:21:19 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/20 17:26:44 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ void					ft_unsetenv(char *name, char ***env);
 void					ft_setenv(char *name, char *value, int o, char ***env);
 int						ft_exec_cmd(char **env, char **cmd);
 int						ft_exec(char **env, char **cmd);
-int						ft_exec_cd(char ***env, char **cmd);
+int						ft_exec_cd(char **env, char **cmd);
 void					ft_recup_signal(int signal);
 void					ft_prompt(char **env, char *str);
-void					ft_unset_all(char ***env);
+//void					ft_unset_all(char ***env);
 size_t					ft_size_id(char const *s, char *c);
+void					ft_exit(char **cmd);
 
 #endif

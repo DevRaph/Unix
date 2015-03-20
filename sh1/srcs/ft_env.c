@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/19 20:37:41 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/19 20:53:21 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/20 17:06:09 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,10 @@ void			ft_env_builtin1(char **env, char **cmd)
 			!ft_strncmp(*(cmd + nb + 1), "./", 2))
 			ft_exec(env, cmd + nb + 1);
 		else if (!ft_strncmp(*(cmd + nb + 1), "cd", 1))
-			ft_exec_cd(&env, cmd + nb + 1);
+			ft_exec_cd(env, cmd + nb + 1);
 		else
 			ft_exec_cmd(env, cmd + nb + 1);
 	}
-	(void)env;
 }
 
 void			ft_env_builtin2(char **env, char **cmd)

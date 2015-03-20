@@ -6,7 +6,7 @@
 #    By: rpinet <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/22 17:50:16 by rpinet            #+#    #+#              #
-#    Updated: 2015/01/22 17:50:21 by rpinet           ###   ########.fr        #
+#    Updated: 2015/03/20 14:59:04 by rpinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRC = 	ft_abs.c ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 	ft_lst_push_back.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lstdelone.c \
 	ft_lstiter.c ft_lstmap.c ft_lstnew.c \
 	ft_print_tab.c ft_error.c ft_size_tab.c\
-	ft_shellcolors.c
+	ft_shellcolors.c \
+	ft_isnb.c
 
 OBJ = $(SRC:.c=.o)
 

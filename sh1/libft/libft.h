@@ -6,7 +6,7 @@
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 12:16:00 by rpinet            #+#    #+#             */
-/*   Updated: 2015/02/27 13:28:28 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/20 14:58:37 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,7 @@ int					ft_size_tab(char **env);
 void				ft_setfgcolor(t_uchar color);
 void				ft_setbgcolor(t_uchar color);
 void				ft_resetcolor(void);
+
+int					ft_isnb(char *s);
 
 #endif
