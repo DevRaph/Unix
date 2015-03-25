@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/19 20:42:30 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/20 18:38:48 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/25 12:21:02 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 static void		ft_fork_cmd(char **path, char **cmd)
 {
 	int			ok;
-
 	extern char	**environ;
 
 	if (cmd == NULL || cmd[0] == NULL || !ft_strcmp(cmd[0], ""))
@@ -81,58 +80,44 @@ static char		**ft_rebuild(char **env, char *p, char *id)
 {
 	int			i;
 	char		*str;
+	char		*pwd;
 
 	i = 0;
+	pwd = getcwd(NULL, 1024);
 	while (env && env[i] && *p && ft_strcmp(env[i++], "\0"))
 	{
 		str = ft_strjoin(id, "=");
 		if (!ft_strncmp(env[i - 1], id, ft_strlen(id)))
-			env[i - 1] = ft_strjoin(str, getcwd(NULL, 1024));
+			env[i - 1] = ft_strjoin(str, pwd);
 	}
 	if (!ft_get_env(env, id) && !ft_strcmp(env[i - 1], "\0"))
 	{
 		str = ft_strjoin(id, "=");
-		env[i - 1] = ft_strjoin(str, getcwd(NULL, 1024));
-		env [i] = ft_strdup("\0");		
+		env[i - 1] = ft_strjoin(str, pwd);
+		env[i] = ft_strdup("\0");
 	}
-//		ft_setenv("OLDPWD", getcwd(NULL, 1024), 1, env);
+	ft_strclr(pwd);
+	ft_strclr(str);
+	free(pwd);
+	free(str);
 	return (env);
 }
 
 int				ft_exec_cd(char **env, char **cmd)
 {
 	char		*p;
-//	int			i;
 
 	p = NULL;
 	if (env && cmd && cmd[0])
 		p = ft_contruct_path(env, cmd);
-	/*i = 0;
-	while (env && env[i] && *p && ft_strcmp(env[i++], "\0"))
-		if (!ft_strncmp(env[i - 1], "OLDPWD", 6))
-			env[i - 1] = ft_strjoin("OLDPWD=", getcwd(NULL, 1024));
-	if (!ft_get_env(env, "OLDPWD") && !ft_strcmp(env[i - 1], "\0"))
-	{
-		env[i - 1] = ft_strjoin("OLDPWD=", getcwd(NULL, 1024));
-		env [i] = ft_strdup("\0");		
-	}*/
 	env = ft_rebuild(env, p, "OLDPWD");
 	if (access(p, F_OK) == 0 && access(p, R_OK) == 0 && access(p, X_OK) == 0)
 	{
 		chdir(p);
-	env = ft_rebuild(env, p, "PWD");
-	/*	i = 0;
-		while (env && env[i] && *p && ft_strcmp(env[i++], "\0"))
-			if (!ft_strncmp(env[i - 1], "PWD", 3))
-				env[i - 1] = ft_strjoin("PWD=", getcwd(NULL, 1024));
-		if (!ft_get_env(env, "PWD") && !ft_strcmp(env[i - 1], "\0"))
-		{
-			env[i - 1] = ft_strjoin("PWD=", getcwd(NULL, 1024));
-			env [i] = ft_strdup("\0");		
-		}
-//			ft_setenv("PWD", getcwd(NULL, 1024), 1, &env);*/
+		env = ft_rebuild(env, p, "PWD");
 	}
 	else
 		return (ft_error("exec_cmd", "no directory or authorization"));
+	free(p);
 	return (1);
 }

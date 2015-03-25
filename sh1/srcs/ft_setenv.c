@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 22:03:41 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/20 16:52:45 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/25 11:31:41 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char		**ft_add_line(char **env, char *name, char *value)
 			save[i++] = ft_strjoin(ft_strjoin(name, "="), value);
 			save[i] = ft_strdup("\0");
 		}
-		ft_strdel(ptr); // a tester
+		ft_strdel(ptr);
 		return (save);
 	}
 	else

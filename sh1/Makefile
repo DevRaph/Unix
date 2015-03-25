@@ -6,7 +6,7 @@
 #    By: rpinet <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/10 15:19:04 by rpinet            #+#    #+#              #
-#    Updated: 2015/02/10 16:11:25 by rpinet           ###   ########.fr        #
+#    Updated: 2015/03/25 10:26:49 by rpinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
+	@rm -rf ft_minishell1.dSYM
 	@make -C libft/ fclean
 	@make -C srcs/ fclean
 	@echo "\033[35;1m•   \033[0mRemoving $(NAME) ...\033[55G\c"

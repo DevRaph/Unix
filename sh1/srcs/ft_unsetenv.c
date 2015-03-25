@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/24 22:03:25 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/20 17:54:06 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/25 11:30:44 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		ft_unset_all(char ***env)
 static char		ft_exec_unset(char **ptr, char *name, char ok)
 {
 	if (!ft_strncmp(*(ptr - 1), ft_strjoin(name, "="), ft_strlen(name) + 1))
-			ok = 'k';
+		ok = 'k';
 	if (ok == 'k')
 	{
 		ft_strclr(*(ptr - 1));

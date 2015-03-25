@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/10 16:20:19 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/20 17:26:44 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/25 11:43:08 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int						ft_exec(char **env, char **cmd);
 int						ft_exec_cd(char **env, char **cmd);
 void					ft_recup_signal(int signal);
 void					ft_prompt(char **env, char *str);
-//void					ft_unset_all(char ***env);
 size_t					ft_size_id(char const *s, char *c);
 void					ft_exit(char **cmd);
 

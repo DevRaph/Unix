@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/10 16:05:43 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/20 17:33:01 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/25 12:21:53 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void			ft_prompt(char **env, char *str)
 {
 	char		*pos;
 
+	ft_resetcolor();
 	ft_setfgcolor(33);
 	write (1, "    [", 5);
 	ft_resetcolor();
@@ -59,16 +60,15 @@ void			ft_launch_shell(char ***env)
 					cmd = ft_strsplit(line, ' ');
 					ft_setfgcolor(2);
 					ft_builtin(env, cmd);
-					ft_resetcolor();
 				}
 			}
 		}
-		ft_strclr(line); // possible segfault
+		ft_strclr(line);
 		ft_prompt(*env, "");
 	}
 }
 
-static char			**ft_init_env(void)
+static char		**ft_init_env(void)
 {
 	char		**env;
 	char		*str;
@@ -85,11 +85,11 @@ static char			**ft_init_env(void)
 	return (env);
 }
 
-int			ft_minishell1(char **environ)
+int				ft_minishell1(char **environ)
 {
-	int		size;
-	char	**env;
-	int		i;
+	int			size;
+	char		**env;
+	int			i;
 
 	if (environ == NULL || *environ == NULL)
 	{
