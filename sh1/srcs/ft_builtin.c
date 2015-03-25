@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/17 22:13:24 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/25 11:42:27 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/25 14:46:19 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ void		ft_builtin(char ***env, char **cmd)
 		if (*(cmd + 1) && *(cmd + 2) && !*(cmd + 3))
 			ft_setenv(cmd[1], cmd[2], 1, env);
 		else
-			ft_error("builtin", "bad argument");
+			ft_error("builtin", (*(cmd + 1)) ? TM_ARG : F_ARG);
 	}
 	else if (!ft_strcmp(*cmd, "unsetenv"))
 	{
 		if (*(cmd + 1))
 			ft_unsetenv(cmd[1], env);
 		else
-			ft_error("builtin", "unsetenv bad argument");
+			ft_error("builtin", "unsetenv bad arguments");
 	}
 	else if (!ft_strcmp(*cmd, "cd"))
 		ft_exec_cd(*env, cmd);

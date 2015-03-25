@@ -6,7 +6,7 @@
 /*   By: rpinet <rpinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/10 16:20:19 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/25 11:43:08 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/25 14:38:50 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+
+# define F_ARG "to fiew argument"
+# define TM_ARG "too many arguments"
 
 char					*ft_join(char *path, char *cmd);
 int						ft_minishell1(char **env);
