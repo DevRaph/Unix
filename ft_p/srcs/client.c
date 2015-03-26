@@ -6,11 +6,10 @@
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 16:20:32 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/25 18:14:32 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/26 14:00:41 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/socket.h>
@@ -18,15 +17,17 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "./libft/libft.h"
+#include "../libft/libft.h"
 
 void					usage(char *str)
 {
-	printf("usage : %s <port>\n", str);
+	ft_putstr("usage : ");
+	ft_putstr(str);
+	ft_putstr("<addr> <port>\n");
 	exit (-1);
 }
 
-int						create_server(int port)
+int						create_client(char *addr, int port)
 {
 	int					sock;
 	struct protoent		*proto;
@@ -38,39 +39,37 @@ int						create_server(int port)
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);
-	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
+	sin.sin_addr.s_addr = inet_addr(addr);
+	if (connect(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
 	{
-		printf ("bind error\n");
+		ft_putstr("bind error\n");
 		exit (2);
 	}
-	listen(sock, 42);
 	return (sock);
 }
 
 int						main(int ac, char **av)
 {
-	int						port;
-	int						sock;
-	int						cs;
-	unsigned int			cslen;
-	struct sockaddr_in		*csin;
-	int						ret;
-	char					buf[1024];
-	if (ac != 2)
+	int					port;
+	int					sock;
+	int					ret;
+	char				buf[1024];
+
+	if (ac != 3)
 		usage(av[0]);
-	port = atoi(av[1]);
-	sock = create_server(port);
-	cs = accept(sock, (struct sockaddr *)&csin, &cslen);
-	while ((ret = read (cs, buf, 1023)) > 0)
+	port = atoi(av[2]);
+	sock = create_client(av[1], port);
+	ft_putendl("client connected\n");
+	while ((ret = read(sock, buf, 1023)) > 0)
 	{
+		ft_putstr("cl $> ");
 		buf[ret] = '\0';
-		if (ft_strncmp(buf, "exit", 4))
-			printf ("-> %s", buf);
-		else
-			exit (0);
+		/*  if (ft_strncmp(buf, "exit", 4))
+			ft_putstr(buf);
+			else
+			close (sock);
+			*/
 	}
-	close(cs);
 	close (sock);
 	return (0);
 }
