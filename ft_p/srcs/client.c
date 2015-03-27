@@ -6,7 +6,7 @@
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 16:20:32 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/26 14:00:41 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/27 13:31:47 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ int						create_client(char *addr, int port)
 		ft_putstr("bind error\n");
 		exit (2);
 	}
+	else
+	{
+		ft_putendl("client connected\n");
+	}
 	return (sock);
 }
 
@@ -59,16 +63,16 @@ int						main(int ac, char **av)
 		usage(av[0]);
 	port = atoi(av[2]);
 	sock = create_client(av[1], port);
-	ft_putendl("client connected\n");
-	while ((ret = read(sock, buf, 1023)) > 0)
+	ft_putstr("cl $> ");
+	while ((ret = read(0, buf, 1023)) >= 0)
 	{
-		ft_putstr("cl $> ");
 		buf[ret] = '\0';
-		/*  if (ft_strncmp(buf, "exit", 4))
-			ft_putstr(buf);
-			else
-			close (sock);
-			*/
+		send(2, buf, ret, MSG_OOB);
+		if (ft_strncmp(buf, "exit", 4))
+			ft_putstr_fd(buf, sock);
+		else
+			break ;
+		ft_putstr("cl $> ");
 	}
 	close (sock);
 	return (0);

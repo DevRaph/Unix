@@ -48,6 +48,29 @@ int						create_server(int port)
 	return (sock);
 }
 
+void					ft_builtin(int cs, char *buf)
+{
+	printf ("client %d -> %s", cs, buf);
+	if (!ft_strncmp(buf, "ls", 2))
+		ft_putendl("execv ls");
+	else if (!ft_strncmp(buf, "cd", 2))
+		ft_putendl("execv cd");
+	else if (!ft_strncmp(buf, "pwd", 3))
+		ft_putendl("execv pwd");
+	else if (!ft_strncmp(buf, "put", 3))
+	{
+		ft_putendl("execv put");
+	}
+	else if (!ft_strncmp(buf, "get", 3))
+	{
+		ft_putendl("execv get");
+	}
+	else if (!ft_strncmp(buf, "quit", 2))
+		ft_putendl("deconnexion du client");
+	else
+		ft_putendl("command not found");
+}
+
 int						main(int ac, char **av)
 {
 	int						port;
@@ -66,13 +89,13 @@ int						main(int ac, char **av)
 	while ((ret = read (cs, buf, 1023)) > 0)
 	{
 		buf[ret] = '\0';
-		if (ft_strncmp(buf, "exit", 4))
-			printf ("-> %s", buf);
-		else
+		//if (ft_strncmp(buf, "exit", 4))
+			ft_builtin(cs, buf);
+		/*else
 		{
 			ft_putendl("--> client disconnected");
 			break ;
-		}
+		}*/
 	}
 	close(cs);
 	close (sock);
