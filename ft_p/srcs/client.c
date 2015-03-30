@@ -6,7 +6,7 @@
 /*   By: rpinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 16:20:32 by rpinet            #+#    #+#             */
-/*   Updated: 2015/03/27 13:31:47 by rpinet           ###   ########.fr       */
+/*   Updated: 2015/03/30 12:54:02 by rpinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "../libft/libft.h"
+#include "../includes/ft_p.h"
 
 void					usage(char *str)
 {
@@ -58,6 +59,7 @@ int						main(int ac, char **av)
 	int					sock;
 	int					ret;
 	char				buf[1024];
+	char				*str;
 
 	if (ac != 3)
 		usage(av[0]);
@@ -66,13 +68,18 @@ int						main(int ac, char **av)
 	ft_putstr("cl $> ");
 	while ((ret = read(0, buf, 1023)) >= 0)
 	{
-		buf[ret] = '\0';
-		send(2, buf, ret, MSG_OOB);
-		if (ft_strncmp(buf, "exit", 4))
-			ft_putstr_fd(buf, sock);
-		else
-			break ;
-		ft_putstr("cl $> ");
+		if (buf[0])
+		{
+			buf[ret] = '\0';
+			str = getcwd(NULL, 1024);
+			str = ft_strjoin(ft_strjoin(str, " "), buf);
+			//send(3, str, ft_strlen(str), MSG_OOB);
+			str = ft_clean(str);
+			ft_putstr_fd(str, sock);
+			if (!ft_strncmp(buf, "quit", 4))
+				break ;
+			ft_putstr("cl $> ");
+		}
 	}
 	close (sock);
 	return (0);

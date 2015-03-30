@@ -20,16 +20,16 @@ int			ft_error(char *s, char *s2)
 	{
 		ft_setbgcolor(9);
 		ft_setfgcolor(0);
-		write(1, " >> ", 3);
-		ft_resetcolor();
+		write(1, " >> ", 5);
+		ft_setbgcolor(0);
 		ft_setfgcolor(9);
 		write (1, " [", 2);
 		write(1, s, ft_strlen(s));
 		write (1, "] : ", 4);
 		if (s2)
 			write(1, s2, ft_strlen(s2));
-		ft_resetcolor();
 		write (1, "\n", 1);
+		ft_resetcolor();
 	}
 	return (0);
 }
