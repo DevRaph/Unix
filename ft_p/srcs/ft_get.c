@@ -26,7 +26,7 @@ void				ft_get(char **cmd)
 		ft_putstr("\n\tserveur : ");
 		ft_putendl(str);
 		ft_putstr("\tfile :    ");
-		ft_putstr(*(cmd + 2));
+		ft_putendl(*(cmd + 2));
 	}
 	else
 	{

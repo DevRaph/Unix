@@ -86,11 +86,16 @@ void					ft_launch(int cs)
 
 	while ((ret = read (cs, buf, 1023)) > 0)
 	{
-		if (buf[0])
+		buf[ret] = '\0'; // segfault sur vide de temps en temps
+		str = ft_clean(buf);
+		cmd = ft_strsplit(buf, ' ');
+		if (*(cmd + 1))
 		{
-			buf[ret] = '\0';
-			str = ft_clean(buf);
-			cmd = ft_strsplit(buf, ' ');
+			ft_putstr("[client - socket:");
+			ft_putnbr(cs);
+			ft_putstr("] >> ");
+			//ft_print_tab(cmd++);
+			ft_print_cmd(cmd);
 			ft_builtin(cs, cmd);
 			if (!ft_strncmp(*(cmd + 1), "quit", 4))
 				break ;
@@ -125,7 +130,7 @@ int						main(int ac, char **av)
 		usage(av[0]);
 	port = atoi(av[1]);
 	sock = create_server(port);
-	ft_putstr("   x-x open serveur | sock:");
+	ft_putstr("\n   x-x open serveur | sock:");
 	ft_putnbr(sock);
 	ft_putendl(" x-x\n");
 	while (1)

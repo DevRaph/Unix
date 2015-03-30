@@ -13,13 +13,8 @@
 #include "../libft/libft.h"
 #include "../includes/ft_p.h"
 
-void			ft_builtin(int cs, char **cmd)
+void			ft_builtin(int cs, char **cmd)// supprimmer cs
 {
-	ft_putstr("[client - socket:");
-	ft_putnbr(cs);
-	ft_putstr("] >> ");
-	//ft_print_tab(cmd++);
-	ft_print_cmd(cmd);
 	if (!ft_strncmp(*(cmd + 1), "ls", 2))
 		ft_putendl("execv ls");
 	else if (!ft_strncmp(*(cmd + 1), "cd", 2))
